@@ -1,0 +1,2394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZEAL — UAE's Premier Talent & Opportunity Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #E8B84B;
+    --gold-light: #F5D27A;
+    --gold-dark: #C49A2A;
+    --emerald: #0A3D2E;
+    --emerald-mid: #0D5C42;
+    --emerald-light: #10774F;
+    --sand: #F5EFE0;
+    --sand-dark: #E8DEC8;
+    --white: #FAFAF8;
+    --ink: #0D0D0A;
+    --ink-light: #2A2A25;
+    --muted: #7A7A6E;
+    --red: #D94F3D;
+    --blue: #2563EB;
+    --radius: 16px;
+    --radius-sm: 8px;
+    --radius-lg: 24px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s;
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 20px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(20px);
+    background: rgba(13,13,10,0.85);
+    border-bottom: 1px solid rgba(232,184,75,0.12);
+    transition: all 0.3s;
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800;
+    color: var(--gold);
+    letter-spacing: -1px;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo span {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    margin-bottom: 2px;
+  }
+  .logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px; font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-left: 4px;
+    margin-top: 4px;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(250,250,248,0.7);
+    text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.2px;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta {
+    display: flex; gap: 12px; align-items: center;
+  }
+  .btn-ghost {
+    padding: 10px 22px;
+    background: transparent;
+    border: 1px solid rgba(232,184,75,0.3);
+    color: var(--gold);
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    cursor: none;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-ghost:hover {
+    background: rgba(232,184,75,0.1);
+    border-color: var(--gold);
+  }
+  .btn-primary {
+    padding: 10px 24px;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: none;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(232,184,75,0.3);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative;
+    padding: 120px 60px 80px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(10,61,46,0.5) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 80% 80%, rgba(232,184,75,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 40% at 10% 20%, rgba(232,184,75,0.06) 0%, transparent 50%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: 
+      linear-gradient(rgba(232,184,75,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,184,75,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 780px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 18px;
+    background: rgba(232,184,75,0.12);
+    border: 1px solid rgba(232,184,75,0.25);
+    border-radius: 100px;
+    font-size: 12px; font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    animation: fadeInUp 0.6s ease both;
+  }
+  .hero-badge .dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(52px, 6vw, 92px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -3px;
+    margin-bottom: 28px;
+    animation: fadeInUp 0.6s 0.1s ease both;
+  }
+  .hero h1 .line-gold { color: var(--gold); }
+  .hero h1 .line-dim { color: rgba(250,250,248,0.4); }
+  .hero-desc {
+    font-size: 18px; font-weight: 300;
+    color: rgba(250,250,248,0.65);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 44px;
+    animation: fadeInUp 0.6s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeInUp 0.6s 0.3s ease both;
+    margin-bottom: 64px;
+  }
+  .btn-hero {
+    padding: 16px 36px;
+    font-size: 16px; font-weight: 600;
+    border-radius: 100px;
+    cursor: none;
+    transition: all 0.25s;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-hero.gold {
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+  }
+  .btn-hero.gold:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(232,184,75,0.35);
+  }
+  .btn-hero.outline {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(250,250,248,0.2);
+  }
+  .btn-hero.outline:hover {
+    border-color: rgba(250,250,248,0.5);
+    background: rgba(250,250,248,0.05);
+    transform: translateY(-2px);
+  }
+  .hero-stats {
+    display: flex; gap: 48px;
+    animation: fadeInUp 0.6s 0.4s ease both;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px; font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .stat-label {
+    font-size: 12px; font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+  .hero-visual {
+    position: absolute; right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 46%;
+    height: 80vh;
+    display: flex; align-items: center; justify-content: center;
+    animation: fadeInRight 0.8s 0.3s ease both;
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateY(-50%) translateX(40px); }
+    to { opacity: 1; transform: translateY(-50%) translateX(0); }
+  }
+
+  /* Floating Cards */
+  .floating-cards {
+    position: relative;
+    width: 380px; height: 500px;
+  }
+  .fcard {
+    position: absolute;
+    background: rgba(20,20,16,0.9);
+    border: 1px solid rgba(232,184,75,0.2);
+    border-radius: var(--radius);
+    padding: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+  }
+  .fcard-1 {
+    top: 0; left: 0; width: 240px;
+    animation: float1 4s ease-in-out infinite;
+  }
+  .fcard-2 {
+    top: 120px; right: 0; width: 200px;
+    animation: float2 5s ease-in-out infinite;
+  }
+  .fcard-3 {
+    bottom: 40px; left: 30px; width: 280px;
+    animation: float3 4.5s ease-in-out infinite;
+  }
+  @keyframes float1 {
+    0%, 100% { transform: translateY(0px) rotate(-1deg); }
+    50% { transform: translateY(-12px) rotate(-1deg); }
+  }
+  @keyframes float2 {
+    0%, 100% { transform: translateY(0px) rotate(2deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
+  }
+  @keyframes float3 {
+    0%, 100% { transform: translateY(0px) rotate(-0.5deg); }
+    50% { transform: translateY(-10px) rotate(-0.5deg); }
+  }
+  .fcard-label {
+    font-size: 10px; font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .fcard-label::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--gold);
+  }
+  .fcard h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--white);
+  }
+  .fcard p {
+    font-size: 12px; font-weight: 300;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .fcard-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(10,61,46,0.8);
+    border: 1px solid rgba(16,119,79,0.4);
+    color: #4ADE80;
+    border-radius: 100px;
+    font-size: 10px; font-weight: 500;
+    margin-top: 10px;
+  }
+  .fcard-company {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .company-logo {
+    width: 32px; height: 32px;
+    background: var(--gold);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 800;
+    color: var(--ink);
+  }
+  .company-info h5 {
+    font-size: 13px; font-weight: 600;
+    color: var(--white);
+  }
+  .company-info span {
+    font-size: 11px; color: var(--muted);
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTIONS */
+  section { padding: 100px 60px; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .section-label::after {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+  .section-desc {
+    font-size: 17px; font-weight: 300;
+    color: rgba(250,250,248,0.6);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 60px;
+  }
+
+  /* FEATURES GRID */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: rgba(232,184,75,0.08);
+    border: 1px solid rgba(232,184,75,0.1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .feature-card {
+    background: rgba(13,13,10,0.95);
+    padding: 40px;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+  .feature-card:hover { background: rgba(20,20,16,0.98); }
+  .feature-card:hover::before { transform: scaleX(1); }
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(232,184,75,0.1);
+    border: 1px solid rgba(232,184,75,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .feature-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+  .feature-card p {
+    font-size: 14px; font-weight: 300;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* TABS SECTION */
+  .tabs-section { background: rgba(10,61,46,0.08); }
+  .tabs-nav {
+    display: flex; gap: 4px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 100px;
+    padding: 5px;
+    width: fit-content;
+    margin-bottom: 48px;
+  }
+  .tab-btn {
+    padding: 10px 28px;
+    border-radius: 100px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    cursor: none;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: var(--gold);
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .tab-panel-img {
+    background: rgba(20,20,16,0.8);
+    border: 1px solid rgba(232,184,75,0.15);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    min-height: 420px;
+    display: flex; flex-direction: column;
+    gap: 16px;
+  }
+  .dashboard-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 8px;
+  }
+  .dash-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 700;
+  }
+  .dash-badge {
+    padding: 4px 12px;
+    background: rgba(74,222,128,0.12);
+    border: 1px solid rgba(74,222,128,0.25);
+    color: #4ADE80;
+    border-radius: 100px;
+    font-size: 11px; font-weight: 500;
+  }
+  .metric-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  .metric-box {
+    background: rgba(255,255,255,0.04);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    text-align: center;
+  }
+  .metric-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px; font-weight: 800;
+    color: var(--gold);
+    letter-spacing: -1px;
+  }
+  .metric-lbl {
+    font-size: 11px; color: var(--muted);
+    margin-top: 2px;
+  }
+  .list-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px;
+    background: rgba(255,255,255,0.03);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .list-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .list-icon.gold-bg { background: rgba(232,184,75,0.15); }
+  .list-icon.green-bg { background: rgba(74,222,128,0.1); }
+  .list-icon.blue-bg { background: rgba(37,99,235,0.15); }
+  .list-meta h5 {
+    font-size: 13px; font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .list-meta span { font-size: 11px; color: var(--muted); }
+  .list-action {
+    margin-left: auto;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 11px; font-weight: 600;
+    cursor: none;
+    border: none;
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .tab-text ul {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .tab-text ul li {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 15px; color: rgba(250,250,248,0.75);
+    line-height: 1.5;
+  }
+  .tab-text ul li::before {
+    content: '→';
+    color: var(--gold);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* UNIVERSITIES SECTION */
+  .universities-section {
+    text-align: center;
+  }
+  .uni-logos-wrap {
+    overflow: hidden;
+    margin-top: 48px;
+    position: relative;
+  }
+  .uni-logos-wrap::before,
+  .uni-logos-wrap::after {
+    content: '';
+    position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2;
+  }
+  .uni-logos-wrap::before { left: 0; background: linear-gradient(90deg, var(--ink), transparent); }
+  .uni-logos-wrap::after { right: 0; background: linear-gradient(-90deg, var(--ink), transparent); }
+  .uni-logos-track {
+    display: flex; gap: 24px;
+    animation: scroll 30s linear infinite;
+    width: max-content;
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .uni-card {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 24px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .uni-card .uni-icon {
+    width: 36px; height: 36px;
+    background: var(--gold);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800;
+    color: var(--ink);
+    font-family: 'Syne', sans-serif;
+  }
+  .uni-card span {
+    font-size: 13px; font-weight: 500;
+    color: rgba(250,250,248,0.8);
+  }
+
+  /* COMPETITIONS */
+  .competitions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .comp-card {
+    background: rgba(20,20,16,0.9);
+    border: 1px solid rgba(232,184,75,0.12);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: none;
+  }
+  .comp-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(232,184,75,0.3);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+  .comp-header {
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(10,61,46,0.6), rgba(13,13,10,0.8));
+    border-bottom: 1px solid rgba(232,184,75,0.1);
+    position: relative;
+  }
+  .comp-type {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .comp-type.hackathon { background: rgba(37,99,235,0.2); color: #60A5FA; border: 1px solid rgba(37,99,235,0.3); }
+  .comp-type.case { background: rgba(232,184,75,0.15); color: var(--gold); border: 1px solid rgba(232,184,75,0.25); }
+  .comp-type.quiz { background: rgba(217,79,61,0.15); color: #FCA5A5; border: 1px solid rgba(217,79,61,0.25); }
+  .comp-header h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+  .comp-host {
+    font-size: 12px; color: var(--muted);
+  }
+  .comp-prize {
+    position: absolute; top: 20px; right: 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    color: var(--gold);
+  }
+  .comp-body {
+    padding: 20px 24px 24px;
+  }
+  .comp-meta {
+    display: flex; gap: 16px;
+    margin-bottom: 20px;
+  }
+  .comp-meta-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+  }
+  .comp-meta-item .dot {
+    width: 4px; height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 100px;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .comp-cta {
+    width: 100%;
+    padding: 12px;
+    background: rgba(232,184,75,0.08);
+    border: 1px solid rgba(232,184,75,0.2);
+    color: var(--gold);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: none;
+    transition: all 0.2s;
+  }
+  .comp-cta:hover {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  /* LEADERBOARD */
+  .leaderboard-section {
+    background: 
+      radial-gradient(ellipse at 50% 0%, rgba(232,184,75,0.08) 0%, transparent 50%),
+      rgba(10,10,8,0.6);
+  }
+  .leaderboard-wrapper {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+  }
+  .leaderboard-list {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .lb-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 20px;
+    background: rgba(20,20,16,0.8);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    transition: all 0.2s;
+    cursor: none;
+  }
+  .lb-item:hover {
+    border-color: rgba(232,184,75,0.2);
+    background: rgba(20,20,16,0.95);
+  }
+  .lb-rank {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px; font-weight: 700;
+    color: var(--muted);
+    width: 28px;
+    text-align: center;
+  }
+  .lb-rank.gold-rank { color: #FFD700; }
+  .lb-rank.silver-rank { color: #C0C0C0; }
+  .lb-rank.bronze-rank { color: #CD7F32; }
+  .lb-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--emerald-mid), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 800;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .lb-info { flex: 1; }
+  .lb-info h5 {
+    font-size: 14px; font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .lb-info span { font-size: 11px; color: var(--muted); }
+  .lb-score {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px; font-weight: 700;
+    color: var(--gold);
+  }
+  .lb-change {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-weight: 500;
+  }
+  .lb-change.up { background: rgba(74,222,128,0.1); color: #4ADE80; }
+  .lb-change.down { background: rgba(248,113,113,0.1); color: #F87171; }
+
+  /* JOBS SECTION */
+  .jobs-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  }
+  .job-card {
+    background: rgba(20,20,16,0.85);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: all 0.25s;
+    cursor: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .job-card::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+  }
+  .job-card:hover::after { transform: scaleY(1); }
+  .job-card:hover {
+    border-color: rgba(232,184,75,0.2);
+    transform: translateX(4px);
+  }
+  .job-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .job-company {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .job-logo {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 800;
+  }
+  .job-info h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 700;
+    margin-bottom: 2px;
+    letter-spacing: -0.3px;
+  }
+  .job-info span { font-size: 12px; color: var(--muted); }
+  .job-salary {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px; font-weight: 700;
+    color: var(--gold);
+  }
+  .job-tags {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .job-tag {
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 100px;
+    font-size: 11px; color: rgba(250,250,248,0.6);
+  }
+  .job-footer {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .job-meta { font-size: 11px; color: var(--muted); }
+  .job-apply {
+    padding: 8px 20px;
+    background: var(--gold);
+    color: var(--ink);
+    border: none; border-radius: 100px;
+    font-size: 12px; font-weight: 600;
+    cursor: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* COMPANIES */
+  .companies-row {
+    display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+    margin-top: 48px;
+  }
+  .company-pill {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    transition: all 0.2s;
+    cursor: none;
+  }
+  .company-pill:hover {
+    background: rgba(232,184,75,0.08);
+    border-color: rgba(232,184,75,0.2);
+  }
+  .cp-icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+    font-family: 'Syne', sans-serif;
+  }
+  .company-pill span {
+    font-size: 13px; font-weight: 500;
+    color: rgba(250,250,248,0.8);
+  }
+
+  /* MONETIZATION */
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .price-card {
+    background: rgba(20,20,16,0.9);
+    border: 1px solid rgba(232,184,75,0.12);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .price-card.featured {
+    border-color: var(--gold);
+    background: rgba(232,184,75,0.05);
+  }
+  .price-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute; top: 20px; right: -30px;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 9px; font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 6px 40px;
+    transform: rotate(45deg);
+    transform-origin: center;
+  }
+  .price-tier {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .price-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .price-amount {
+    font-family: 'Space Mono', monospace;
+    font-size: 44px; font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 4px;
+  }
+  .price-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+  .price-features {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 32px;
+  }
+  .price-features li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: rgba(250,250,248,0.75);
+  }
+  .price-features li::before {
+    content: '✓';
+    width: 18px; height: 18px;
+    background: rgba(74,222,128,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    color: #4ADE80;
+    flex-shrink: 0;
+  }
+
+  /* ARCHITECTURE */
+  .arch-diagram {
+    background: rgba(20,20,16,0.8);
+    border: 1px solid rgba(232,184,75,0.15);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+  }
+  .arch-row {
+    display: flex; gap: 12px; align-items: stretch;
+    margin-bottom: 12px;
+  }
+  .arch-box {
+    flex: 1;
+    padding: 18px;
+    border-radius: var(--radius);
+    text-align: center;
+    font-size: 13px; font-weight: 500;
+    border: 1px solid;
+  }
+  .arch-box.frontend { background: rgba(37,99,235,0.1); border-color: rgba(37,99,235,0.3); color: #93C5FD; }
+  .arch-box.backend { background: rgba(10,61,46,0.4); border-color: rgba(16,119,79,0.4); color: #86EFAC; }
+  .arch-box.db { background: rgba(232,184,75,0.08); border-color: rgba(232,184,75,0.2); color: var(--gold); }
+  .arch-box.infra { background: rgba(217,79,61,0.08); border-color: rgba(217,79,61,0.25); color: #FCA5A5; }
+  .arch-box h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .arch-box span { font-size: 11px; opacity: 0.7; display: block; }
+  .arch-arrow {
+    text-align: center;
+    color: rgba(232,184,75,0.4);
+    font-size: 18px;
+    margin: 6px 0;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    text-align: center;
+    background: 
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(10,61,46,0.4) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 50% 100%, rgba(232,184,75,0.06) 0%, transparent 50%);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: 'ZEAL';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Syne', sans-serif;
+    font-size: 280px;
+    font-weight: 800;
+    color: rgba(232,184,75,0.03);
+    letter-spacing: -10px;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+  .cta-section h2 {
+    font-size: clamp(40px, 5vw, 72px);
+    margin-bottom: 20px;
+  }
+  .cta-desc {
+    font-size: 18px; font-weight: 300;
+    color: rgba(250,250,248,0.6);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 44px;
+  }
+  .cta-buttons {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 60px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px;
+  }
+  .footer-brand p {
+    font-size: 14px; color: var(--muted);
+    line-height: 1.7;
+    margin-top: 12px;
+    max-width: 260px;
+  }
+  .footer-col h5 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700;
+    margin-bottom: 16px;
+    color: rgba(250,250,248,0.9);
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a {
+    font-size: 13px; color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: var(--gold); }
+  .footer-bottom {
+    padding: 24px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* NAV PAGE INDICATOR */
+  .page-tabs {
+    display: flex; background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    overflow-x: auto;
+    padding: 0 60px;
+  }
+  .page-tab {
+    padding: 16px 28px;
+    font-size: 13px; font-weight: 500;
+    color: var(--muted);
+    cursor: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: none; border-top: none; border-left: none; border-right: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .page-tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+  .page-tab:hover:not(.active) { color: var(--white); }
+
+  /* UAE Map Decoration */
+  .uae-highlight {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px;
+    background: rgba(232,184,75,0.08);
+    border-radius: 100px;
+    font-size: 12px; color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  /* Investor Pitch */
+  .pitch-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+  }
+  .pitch-card {
+    background: rgba(20,20,16,0.9);
+    border: 1px solid rgba(232,184,75,0.12);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+  }
+  .pitch-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--gold);
+    letter-spacing: -0.5px;
+  }
+  .pitch-card p {
+    font-size: 14px; font-weight: 300;
+    color: rgba(250,250,248,0.65);
+    line-height: 1.7;
+  }
+  .pitch-card .big-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 48px; font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  /* Mobile Concept */
+  .mobile-concept {
+    display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: center;
+  }
+  .phone-mockup {
+    width: 240px;
+    background: rgba(20,20,16,0.95);
+    border: 2px solid rgba(232,184,75,0.25);
+    border-radius: 40px;
+    padding: 20px 16px;
+    position: relative;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5), inset 0 0 40px rgba(232,184,75,0.03);
+    margin: 0 auto;
+  }
+  .phone-notch {
+    width: 80px; height: 24px;
+    background: rgba(0,0,0,0.8);
+    border-radius: 100px;
+    margin: 0 auto 20px;
+  }
+  .phone-screen { min-height: 400px; }
+  .phone-bottom {
+    display: flex; justify-content: center; gap: 28px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 16px;
+  }
+  .phone-icon {
+    font-size: 20px;
+    opacity: 0.5;
+    cursor: none;
+  }
+  .phone-icon.active { opacity: 1; }
+
+  /* Roadmap */
+  .roadmap {
+    display: flex; gap: 0;
+    position: relative;
+  }
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    top: 24px; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .roadmap-item {
+    flex: 1;
+    padding-top: 60px;
+    position: relative;
+    padding-right: 32px;
+  }
+  .roadmap-item::before {
+    content: '';
+    position: absolute;
+    top: 16px; left: 0;
+    width: 18px; height: 18px;
+    background: var(--ink);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+  }
+  .roadmap-item.done::before { background: var(--gold); }
+  .roadmap-quarter {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .roadmap-item h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .roadmap-item p {
+    font-size: 13px; color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Utility */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,184,75,0.2), transparent);
+    margin: 0 60px;
+  }
+  .text-gold { color: var(--gold); }
+  .text-muted { color: var(--muted); }
+
+  /* DB Schema */
+  .schema-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .table-card {
+    background: rgba(20,20,16,0.9);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .table-header {
+    padding: 12px 16px;
+    background: rgba(232,184,75,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .table-header h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px; font-weight: 700;
+    color: var(--gold);
+  }
+  .table-fields { padding: 12px; }
+  .field-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .field-row:hover { background: rgba(255,255,255,0.03); }
+  .field-name { color: rgba(250,250,248,0.8); font-family: 'Space Mono', monospace; }
+  .field-type { color: var(--muted); font-size: 10px; }
+  .field-pk { color: var(--gold); font-size: 9px; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    ZEAL<span></span>
+    <small class="logo-sub">UAE</small>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#competitions">Compete</a></li>
+    <li><a href="#jobs">Jobs & Internships</a></li>
+    <li><a href="#universities">Universities</a></li>
+    <li><a href="#leaderboard">Rankings</a></li>
+    <li><a href="#companies">For Companies</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="#" class="btn-ghost">Sign In</a>
+    <a href="#" class="btn-primary">Join Free →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Now Live Across All 7 Emirates
+    </div>
+    <h1>
+      Where UAE's<br>
+      <span class="line-gold">Brightest</span><br>
+      <span class="line-dim">Minds Rise</span>
+    </h1>
+    <p class="hero-desc">
+      The UAE's first unified platform connecting students, universities and companies through competitions, internships, jobs, and mentorship.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-hero gold">Start Your Journey →</a>
+      <a href="#competitions" class="btn-hero outline">View Competitions</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">47K+</div>
+        <div class="stat-label">Students Registered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">380+</div>
+        <div class="stat-label">Active Competitions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1,200+</div>
+        <div class="stat-label">Hiring Partners</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="floating-cards">
+      <div class="fcard fcard-1">
+        <div class="fcard-label">Live Hackathon</div>
+        <h4>UAE FinTech Challenge 2025</h4>
+        <p>Hosted by DIFC Innovation Hub</p>
+        <span class="fcard-badge">🏆 AED 100,000 Prize</span>
+      </div>
+      <div class="fcard fcard-2">
+        <div class="fcard-company">
+          <div class="company-logo">E&</div>
+          <div class="company-info">
+            <h5>e& (Etisalat)</h5>
+            <span>Abu Dhabi</span>
+          </div>
+        </div>
+        <h4>Software Engineer Intern</h4>
+        <p>6 months · AED 4,500/mo</p>
+        <span class="fcard-badge">⚡ Fast Apply</span>
+      </div>
+      <div class="fcard fcard-3">
+        <div class="fcard-label">Leaderboard</div>
+        <h4>🥇 Sara Al Hashimi</h4>
+        <p>AUS · 9,840 ZEAL Points · #1 UAE</p>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <span class="fcard-badge">Hackathon Pro</span>
+          <span class="fcard-badge">Case Champion</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PAGE TABS -->
+<div class="page-tabs">
+  <button class="page-tab active" onclick="scrollTo('#top')">Overview</button>
+  <button class="page-tab" onclick="showTab('students')">Student Dashboard</button>
+  <button class="page-tab" onclick="showTab('recruiter')">Recruiter Dashboard</button>
+  <button class="page-tab">Competitions</button>
+  <button class="page-tab">Jobs & Internships</button>
+  <button class="page-tab">Leaderboard</button>
+  <button class="page-tab">Architecture</button>
+  <button class="page-tab">Investor Pitch</button>
+</div>
+
+<!-- FEATURES -->
+<section>
+  <div class="section-label">Platform Core</div>
+  <h2>Everything in One<br><span class="text-gold">UAE Platform</span></h2>
+  <p class="section-desc">Built for the ambition of the Emirates — one platform for students, universities, and employers.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Live Competitions</h3>
+      <p>Hackathons, case competitions, quizzes, and coding challenges hosted by leading UAE corporates and government entities.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💼</div>
+      <h3>Internship Marketplace</h3>
+      <p>2,000+ verified internships at UAE startups, corporates, and government programs. Direct apply with your ZEAL profile.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>AI Job Matching</h3>
+      <p>Our AI engine matches your skills, competition performance, and interests to the most relevant UAE job opportunities.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏆</div>
+      <h3>UAE Leaderboard</h3>
+      <p>National and emirate-level rankings based on competition wins, skill scores, peer reviews, and academic achievements.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎓</div>
+      <h3>University Hub</h3>
+      <p>All 63 UAE universities on one platform. Host events, run club competitions, and connect directly with recruiters.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤝</div>
+      <h3>Mentorship Network</h3>
+      <p>Book 1:1 sessions with industry leaders, successful founders, and senior professionals across the UAE ecosystem.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧠</div>
+      <h3>Skill Assessments</h3>
+      <p>Proctored coding tests, aptitude tests, and domain knowledge assessments — certified and trusted by UAE employers.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>ZEAL Score</h3>
+      <p>A dynamic reputation score that reflects your total value — skills, achievements, peer reviews, and professional growth.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌐</div>
+      <h3>Arabic + English</h3>
+      <p>Fully bilingual platform with RTL Arabic support, ensuring every Emirati student can engage in their first language.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DASHBOARD TABS -->
+<section class="tabs-section" id="dashboards">
+  <div class="section-label">Platform Views</div>
+  <h2>Built for Every<br><span class="text-gold">Stakeholder</span></h2>
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab(this, 'tab-student')">Student</button>
+    <button class="tab-btn" onclick="switchTab(this, 'tab-recruiter')">Recruiter</button>
+    <button class="tab-btn" onclick="switchTab(this, 'tab-university')">University</button>
+  </div>
+
+  <!-- STUDENT TAB -->
+  <div class="tab-content active" id="tab-student">
+    <div class="tab-panel-img">
+      <div class="dashboard-header">
+        <div>
+          <div class="dash-title">My ZEAL Dashboard</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Sara Al Hashimi · AUS · Computer Science</div>
+        </div>
+        <div class="dash-badge">ZEAL Score: 9,840</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-box">
+          <div class="metric-val">14</div>
+          <div class="metric-lbl">Competitions</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">6</div>
+          <div class="metric-lbl">Wins</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">#1</div>
+          <div class="metric-lbl">UAE Rank</div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="list-icon gold-bg">🏆</div>
+        <div class="list-meta">
+          <h5>UAE FinTech Hackathon — Winner</h5>
+          <span>DIFC · March 2025 · +1,200 pts</span>
+        </div>
+        <button class="list-action">Share</button>
+      </div>
+      <div class="list-item">
+        <div class="list-icon green-bg">💼</div>
+        <div class="list-meta">
+          <h5>Product Intern @ Noon.com — Offer Received</h5>
+          <span>Dubai · AED 5,000/mo · Starting June</span>
+        </div>
+        <button class="list-action">View</button>
+      </div>
+      <div class="list-item">
+        <div class="list-icon blue-bg">📅</div>
+        <div class="list-meta">
+          <h5>Mentorship with Ahmed Alrawi (Careem CTO)</h5>
+          <span>Tomorrow at 3:00 PM · Video Call</span>
+        </div>
+        <button class="list-action">Join</button>
+      </div>
+    </div>
+    <div class="tab-text">
+      <h3 style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;margin-bottom:20px;letter-spacing:-1px">Your complete<br><span class="text-gold">career launchpad</span></h3>
+      <ul>
+        <li>Dynamic profile with ZEAL Score — your single career passport across the UAE</li>
+        <li>AI-powered job & internship recommendations based on your skills and activity</li>
+        <li>Competition tracker with certificates, badges, and portfolio integration</li>
+        <li>One-click resume builder using your ZEAL data — export in ATS-friendly format</li>
+        <li>Mentorship marketplace — book sessions with 500+ UAE industry professionals</li>
+        <li>Skill assessment hub with employer-recognized certifications</li>
+        <li>Scholarship discovery — UAE government and private scholarships in one place</li>
+        <li>Arab-first design with full RTL Arabic interface support</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- RECRUITER TAB -->
+  <div class="tab-content" id="tab-recruiter">
+    <div class="tab-panel-img">
+      <div class="dashboard-header">
+        <div>
+          <div class="dash-title">Recruiter Dashboard</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Noon.com · HR Manager · Dubai</div>
+        </div>
+        <div class="dash-badge">32 New Applicants</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-box">
+          <div class="metric-val">847</div>
+          <div class="metric-lbl">Applicants</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">12</div>
+          <div class="metric-lbl">Active Jobs</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">94%</div>
+          <div class="metric-lbl">Match Rate</div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="list-icon gold-bg">🎯</div>
+        <div class="list-meta">
+          <h5>Host a Hackathon — Discovery Mode</h5>
+          <span>Reach 47,000+ students in UAE</span>
+        </div>
+        <button class="list-action">Launch</button>
+      </div>
+      <div class="list-item">
+        <div class="list-icon green-bg">👤</div>
+        <div class="list-meta">
+          <h5>Sara Al Hashimi — AI Match: 98%</h5>
+          <span>AUS · CS · ZEAL Score 9,840 · Available June</span>
+        </div>
+        <button class="list-action">Contact</button>
+      </div>
+      <div class="list-item">
+        <div class="list-icon blue-bg">📊</div>
+        <div class="list-meta">
+          <h5>Campus Drive — UAEU & Khalifa Uni</h5>
+          <span>April 12 · 380 registrations so far</span>
+        </div>
+        <button class="list-action">Manage</button>
+      </div>
+    </div>
+    <div class="tab-text">
+      <h3 style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;margin-bottom:20px;letter-spacing:-1px">Hire UAE's<br><span class="text-gold">best talent</span></h3>
+      <ul>
+        <li>AI-powered candidate filtering using ZEAL Score, skills, and competition performance</li>
+        <li>Host branded hackathons and challenges to attract relevant talent organically</li>
+        <li>Campus hiring programs with direct UAEU, AUS, AUD, KU integrations</li>
+        <li>Video interview scheduling and async screening tools built-in</li>
+        <li>Diversity hiring filters — track Emirati quota compliance easily</li>
+        <li>Talent pipeline management with CRM-style candidate tracking</li>
+        <li>Analytics: source quality, time-to-hire, offer acceptance rates</li>
+        <li>Assessment API — plug ZEAL skill tests into your existing ATS</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- UNIVERSITY TAB -->
+  <div class="tab-content" id="tab-university">
+    <div class="tab-panel-img">
+      <div class="dashboard-header">
+        <div>
+          <div class="dash-title">University Portal</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">American University of Sharjah (AUS)</div>
+        </div>
+        <div class="dash-badge">Top Ranked University</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-box">
+          <div class="metric-val">6.2K</div>
+          <div class="metric-lbl">Students</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">84%</div>
+          <div class="metric-lbl">Placement Rate</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">42</div>
+          <div class="metric-lbl">Events Hosted</div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="list-icon gold-bg">🏫</div>
+        <div class="list-meta">
+          <h5>AUS Innovation Hackathon 2025</h5>
+          <span>380 teams registered · AED 50,000 prize pool</span>
+        </div>
+        <button class="list-action">Manage</button>
+      </div>
+      <div class="list-item">
+        <div class="list-icon green-bg">🤝</div>
+        <div class="list-meta">
+          <h5>Campus Recruitment Drive — 28 companies</h5>
+          <span>May 5-6 · Career Fair Integration</span>
+        </div>
+        <button class="list-action">View</button>
+      </div>
+      <div class="list-item">
+        <div class="list-icon blue-bg">📊</div>
+        <div class="list-meta">
+          <h5>Student Skill Report — Q1 2025</h5>
+          <span>Tech skills up 22% · Top skill: ML/AI</span>
+        </div>
+        <button class="list-action">Report</button>
+      </div>
+    </div>
+    <div class="tab-text">
+      <h3 style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;margin-bottom:20px;letter-spacing:-1px">Elevate your<br><span class="text-gold">campus brand</span></h3>
+      <ul>
+        <li>University profile with placement stats, alumni highlights, and rankings</li>
+        <li>Host hackathons, case competitions, and inter-university championships</li>
+        <li>Club management tools — create, promote, and run society competitions</li>
+        <li>Placement cell dashboard with direct employer outreach and analytics</li>
+        <li>Student skill audit — identify gaps and design curriculum improvements</li>
+        <li>Alumni network integration with mentorship and referral workflows</li>
+        <li>Scholarship posting for government and institutional awards</li>
+        <li>UAE Ministry of Education integration for QNRF-eligible programs</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- UNIVERSITIES TICKER -->
+<section class="universities-section" id="universities">
+  <div class="section-label" style="justify-content:center">UAE Ecosystem</div>
+  <h2>Powering Every<br><span class="text-gold">UAE University</span></h2>
+  <p class="section-desc" style="margin:0 auto 0">From UAEU to NYU Abu Dhabi — all 63+ UAE universities on one platform</p>
+  <div class="uni-logos-wrap">
+    <div class="uni-logos-track">
+      <!-- First set -->
+      <div class="uni-card"><div class="uni-icon">UAE</div><span>UAE University (UAEU)</span></div>
+      <div class="uni-card"><div class="uni-icon">AUS</div><span>American Univ. of Sharjah</span></div>
+      <div class="uni-card"><div class="uni-icon">KU</div><span>Khalifa University</span></div>
+      <div class="uni-card"><div class="uni-icon">NYU</div><span>NYU Abu Dhabi</span></div>
+      <div class="uni-card"><div class="uni-icon">HCT</div><span>Higher Colleges of Tech</span></div>
+      <div class="uni-card"><div class="uni-icon">AUD</div><span>American Univ. in Dubai</span></div>
+      <div class="uni-card"><div class="uni-icon">ZU</div><span>Zayed University</span></div>
+      <div class="uni-card"><div class="uni-icon">UOS</div><span>Univ. of Sharjah</span></div>
+      <div class="uni-card"><div class="uni-icon">RIT</div><span>RIT Dubai</span></div>
+      <div class="uni-card"><div class="uni-icon">BUiD</div><span>British Univ. in Dubai</span></div>
+      <div class="uni-card"><div class="uni-icon">MDX</div><span>Middlesex Univ. Dubai</span></div>
+      <div class="uni-card"><div class="uni-icon">SP</div><span>SP Jain School of Mgmt</span></div>
+      <!-- Duplicate for seamless loop -->
+      <div class="uni-card"><div class="uni-icon">UAE</div><span>UAE University (UAEU)</span></div>
+      <div class="uni-card"><div class="uni-icon">AUS</div><span>American Univ. of Sharjah</span></div>
+      <div class="uni-card"><div class="uni-icon">KU</div><span>Khalifa University</span></div>
+      <div class="uni-card"><div class="uni-icon">NYU</div><span>NYU Abu Dhabi</span></div>
+      <div class="uni-card"><div class="uni-icon">HCT</div><span>Higher Colleges of Tech</span></div>
+      <div class="uni-card"><div class="uni-icon">AUD</div><span>American Univ. in Dubai</span></div>
+      <div class="uni-card"><div class="uni-icon">ZU</div><span>Zayed University</span></div>
+      <div class="uni-card"><div class="uni-icon">UOS</div><span>Univ. of Sharjah</span></div>
+      <div class="uni-card"><div class="uni-icon">RIT</div><span>RIT Dubai</span></div>
+      <div class="uni-card"><div class="uni-icon">BUiD</div><span>British Univ. in Dubai</span></div>
+      <div class="uni-card"><div class="uni-icon">MDX</div><span>Middlesex Univ. Dubai</span></div>
+      <div class="uni-card"><div class="uni-icon">SP</div><span>SP Jain School of Mgmt</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPETITIONS -->
+<section id="competitions">
+  <div class="section-label">Live & Upcoming</div>
+  <h2>Featured<br><span class="text-gold">Competitions</span></h2>
+  <p class="section-desc">Win prizes, gain recognition, get hired — directly through competition performance.</p>
+  <div class="competitions-grid">
+    <div class="comp-card">
+      <div class="comp-header">
+        <div class="comp-type hackathon">Hackathon</div>
+        <h3>UAE FinTech Innovation Challenge</h3>
+        <div class="comp-host">Hosted by DIFC Innovation Hub + Emirates NBD</div>
+        <div class="comp-prize">AED 100K</div>
+      </div>
+      <div class="comp-body">
+        <div class="comp-meta">
+          <div class="comp-meta-item"><span class="dot"></span>48h Sprint</div>
+          <div class="comp-meta-item"><span class="dot"></span>Teams of 3-5</div>
+          <div class="comp-meta-item"><span class="dot"></span>Dubai</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+        <div class="progress-label"><span>1,438 / 2,000 teams</span><span>Closes Apr 15</span></div>
+        <button class="comp-cta">Register Team →</button>
+      </div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-header">
+        <div class="comp-type case">Case Competition</div>
+        <h3>Majid Al Futtaim Strategy Challenge</h3>
+        <div class="comp-host">Hosted by MAF Group · McKinsey partnered</div>
+        <div class="comp-prize">AED 25K</div>
+      </div>
+      <div class="comp-body">
+        <div class="comp-meta">
+          <div class="comp-meta-item"><span class="dot"></span>2 Rounds</div>
+          <div class="comp-meta-item"><span class="dot"></span>Teams of 2-4</div>
+          <div class="comp-meta-item"><span class="dot"></span>Online</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div>
+        <div class="progress-label"><span>897 / 2,000 teams</span><span>Closes May 1</span></div>
+        <button class="comp-cta">Register Team →</button>
+      </div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-header">
+        <div class="comp-type quiz">Quiz Challenge</div>
+        <h3>ADNOC Energy Future Quiz</h3>
+        <div class="comp-host">Hosted by ADNOC Group · Open to all UAE students</div>
+        <div class="comp-prize">AED 10K</div>
+      </div>
+      <div class="comp-body">
+        <div class="comp-meta">
+          <div class="comp-meta-item"><span class="dot"></span>Individual</div>
+          <div class="comp-meta-item"><span class="dot"></span>60 mins</div>
+          <div class="comp-meta-item"><span class="dot"></span>Online</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div>
+        <div class="progress-label"><span>8,800 / 10,000 slots</span><span>Closes Apr 30</span></div>
+        <button class="comp-cta">Register Now →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LEADERBOARD -->
+<section class="leaderboard-section" id="leaderboard">
+  <div class="leaderboard-wrapper">
+    <div>
+      <div class="section-label">National Rankings</div>
+      <h2>UAE<br><span class="text-gold">Leaderboard</span></h2>
+      <p class="section-desc">Compete, win, and rise in the national rankings. Your ZEAL Score reflects your full potential.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
+        <button class="tab-btn active" style="padding:8px 20px">All UAE</button>
+        <button class="tab-btn" style="padding:8px 20px">Dubai</button>
+        <button class="tab-btn" style="padding:8px 20px">Abu Dhabi</button>
+        <button class="tab-btn" style="padding:8px 20px">Tech</button>
+        <button class="tab-btn" style="padding:8px 20px">Business</button>
+      </div>
+    </div>
+    <div class="leaderboard-list">
+      <div class="lb-item">
+        <div class="lb-rank gold-rank">🥇</div>
+        <div class="lb-avatar" style="background:linear-gradient(135deg,#0A3D2E,#E8B84B)">SA</div>
+        <div class="lb-info">
+          <h5>Sara Al Hashimi</h5>
+          <span>AUS · Computer Science</span>
+        </div>
+        <div class="lb-score">9,840</div>
+        <div class="lb-change up">↑ 2</div>
+      </div>
+      <div class="lb-item">
+        <div class="lb-rank silver-rank">🥈</div>
+        <div class="lb-avatar" style="background:linear-gradient(135deg,#1e3a5f,#60a5fa)">KA</div>
+        <div class="lb-info">
+          <h5>Khalid Al Ameri</h5>
+          <span>UAEU · Engineering</span>
+        </div>
+        <div class="lb-score">9,312</div>
+        <div class="lb-change up">↑ 1</div>
+      </div>
+      <div class="lb-item">
+        <div class="lb-rank bronze-rank">🥉</div>
+        <div class="lb-avatar" style="background:linear-gradient(135deg,#3d1e00,#cd7f32)">LR</div>
+        <div class="lb-info">
+          <h5>Layla Rahman</h5>
+          <span>KU · Data Science</span>
+        </div>
+        <div class="lb-score">8,997</div>
+        <div class="lb-change down">↓ 1</div>
+      </div>
+      <div class="lb-item">
+        <div class="lb-rank" style="color:#888">#4</div>
+        <div class="lb-avatar" style="background:linear-gradient(135deg,#1a1a4e,#7c3aed)">FM</div>
+        <div class="lb-info">
+          <h5>Faisal Al Mansoori</h5>
+          <span>NYU AD · CS + Economics</span>
+        </div>
+        <div class="lb-score">8,740</div>
+        <div class="lb-change up">↑ 3</div>
+      </div>
+      <div class="lb-item">
+        <div class="lb-rank" style="color:#888">#5</div>
+        <div class="lb-avatar" style="background:linear-gradient(135deg,#3d1a00,#f97316)">NA</div>
+        <div class="lb-info">
+          <h5>Nour Al Aqrabawi</h5>
+          <span>AUD · Business Analytics</span>
+        </div>
+        <div class="lb-score">8,510</div>
+        <div class="lb-change up">↑ 5</div>
+      </div>
+      <div class="lb-item">
+        <div class="lb-rank" style="color:#888">#6</div>
+        <div class="lb-avatar" style="background:linear-gradient(135deg,#0d3d2e,#10b981)">YA</div>
+        <div class="lb-info">
+          <h5>Yousuf Al Blooshi</h5>
+          <span>Zayed Uni · AI & Robotics</span>
+        </div>
+        <div class="lb-score">8,221</div>
+        <div class="lb-change down">↓ 2</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- JOBS & INTERNSHIPS -->
+<section id="jobs">
+  <div class="section-label">Opportunities</div>
+  <h2>Top Jobs &<br><span class="text-gold">Internships</span></h2>
+  <p class="section-desc">From global tech giants to homegrown UAE startups — your next role is here.</p>
+  <div class="jobs-grid">
+    <div class="job-card">
+      <div class="job-top">
+        <div class="job-company">
+          <div class="job-logo" style="background:rgba(232,184,75,0.15);color:var(--gold)">N</div>
+          <div class="job-info">
+            <h4>Product Manager</h4>
+            <span>Noon.com · Dubai</span>
+          </div>
+        </div>
+        <div class="job-salary">AED 22K</div>
+      </div>
+      <div class="job-tags">
+        <span class="job-tag">Full-Time</span>
+        <span class="job-tag">Product</span>
+        <span class="job-tag">3-5 yrs</span>
+        <span class="job-tag">🏆 ZEAL Match</span>
+      </div>
+      <div class="job-footer">
+        <span class="job-meta">📍 Downtown Dubai · Posted 2d ago</span>
+        <button class="job-apply">Quick Apply</button>
+      </div>
+    </div>
+    <div class="job-card">
+      <div class="job-top">
+        <div class="job-company">
+          <div class="job-logo" style="background:rgba(37,99,235,0.15);color:#60A5FA">C</div>
+          <div class="job-info">
+            <h4>Software Engineer Intern</h4>
+            <span>Careem · Abu Dhabi</span>
+          </div>
+        </div>
+        <div class="job-salary">AED 5K</div>
+      </div>
+      <div class="job-tags">
+        <span class="job-tag">Internship</span>
+        <span class="job-tag">Backend</span>
+        <span class="job-tag">6 months</span>
+        <span class="job-tag">⚡ Fast Track</span>
+      </div>
+      <div class="job-footer">
+        <span class="job-meta">📍 ADGM · Posted today</span>
+        <button class="job-apply">Quick Apply</button>
+      </div>
+    </div>
+    <div class="job-card">
+      <div class="job-top">
+        <div class="job-company">
+          <div class="job-logo" style="background:rgba(10,61,46,0.5);color:#4ADE80">E</div>
+          <div class="job-info">
+            <h4>Data Scientist</h4>
+            <span>e& (Etisalat) · Abu Dhabi</span>
+          </div>
+        </div>
+        <div class="job-salary">AED 18K</div>
+      </div>
+      <div class="job-tags">
+        <span class="job-tag">Full-Time</span>
+        <span class="job-tag">Data & AI</span>
+        <span class="job-tag">2+ yrs</span>
+        <span class="job-tag">🇦🇪 Emirati+</span>
+      </div>
+      <div class="job-footer">
+        <span class="job-meta">📍 Khalifa City · Posted 1d ago</span>
+        <button class="job-apply">Quick Apply</button>
+      </div>
+    </div>
+    <div class="job-card">
+      <div class="job-top">
+        <div class="job-company">
+          <div class="job-logo" style="background:rgba(217,79,61,0.15);color:#FCA5A5">T</div>
+          <div class="job-info">
+            <h4>UX Design Intern</h4>
+            <span>talabat · Dubai</span>
+          </div>
+        </div>
+        <div class="job-salary">AED 4.5K</div>
+      </div>
+      <div class="job-tags">
+        <span class="job-tag">Internship</span>
+        <span class="job-tag">Design</span>
+        <span class="job-tag">3 months</span>
+        <span class="job-tag">🎨 Portfolio Req.</span>
+      </div>
+      <div class="job-footer">
+        <span class="job-meta">📍 Business Bay · Posted 3d ago</span>
+        <button class="job-apply">Quick Apply</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPANIES -->
+<section id="companies" style="text-align:center">
+  <div class="section-label" style="justify-content:center">Hiring Partners</div>
+  <h2>UAE's Leading<br><span class="text-gold">Companies Hire Here</span></h2>
+  <p class="section-desc" style="margin:0 auto">From government enterprises to fast-growing startups, discover UAE's top employers on ZEAL.</p>
+  <div class="companies-row">
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(232,184,75,0.15);color:var(--gold)">AD</div><span>ADNOC</span></div>
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(37,99,235,0.15);color:#60A5FA">E</div><span>Emirates Group</span></div>
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(74,222,128,0.1);color:#4ADE80">N</div><span>Noon.com</span></div>
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(10,61,46,0.5);color:#86EFAC">C</div><span>Careem</span></div>
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(232,184,75,0.12);color:var(--gold)">DP</div><span>DP World</span></div>
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(217,79,61,0.15);color:#FCA5A5">T</div><span>talabat</span></div>
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(37,99,235,0.15);color:#93C5FD">M</div><span>Majid Al Futtaim</span></div>
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(232,184,75,0.1);color:var(--gold)">FAB</div><span>First Abu Dhabi Bank</span></div>
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(74,222,128,0.08);color:#4ADE80">G42</div><span>G42 (AI Company)</span></div>
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(10,61,46,0.4);color:#86EFAC">AD</div><span>ADQ</span></div>
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(232,184,75,0.1);color:var(--gold)">DU</div><span>du Telecom</span></div>
+    <div class="company-pill"><div class="cp-icon" style="background:rgba(37,99,235,0.12);color:#93C5FD">Ob</div><span>Obvious AI</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MONETIZATION -->
+<section>
+  <div class="section-label">Revenue Model</div>
+  <h2>Sustainable<br><span class="text-gold">Monetization</span></h2>
+  <p class="section-desc">Multiple revenue streams aligned with value delivered to every stakeholder.</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-tier">Students</div>
+      <h3>Free Forever</h3>
+      <div class="price-amount">AED 0</div>
+      <div class="price-period">Core features always free</div>
+      <ul class="price-features">
+        <li>Full profile & ZEAL Score</li>
+        <li>Competition participation</li>
+        <li>Job & internship applications</li>
+        <li>Basic skill assessments</li>
+        <li>Community access</li>
+      </ul>
+      <a href="#" class="btn-primary" style="display:block;text-align:center;padding:14px;border-radius:var(--radius-sm)">Join Free →</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-tier">Students Pro</div>
+      <h3>ZEAL Pro</h3>
+      <div class="price-amount">AED 49</div>
+      <div class="price-period">per month · cancel anytime</div>
+      <ul class="price-features">
+        <li>AI-powered job matching</li>
+        <li>Resume builder + ATS optimizer</li>
+        <li>Priority mentorship access</li>
+        <li>Advanced skill certifications</li>
+        <li>Early competition access</li>
+        <li>Portfolio website builder</li>
+      </ul>
+      <a href="#" class="btn-primary" style="display:block;text-align:center;padding:14px;border-radius:var(--radius-sm)">Upgrade to Pro →</a>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">Companies</div>
+      <h3>Recruiter Plans</h3>
+      <div class="price-amount">AED 2K</div>
+      <div class="price-period">starting per month</div>
+      <ul class="price-features">
+        <li>Unlimited job postings</li>
+        <li>AI candidate shortlisting</li>
+        <li>Competition hosting tools</li>
+        <li>Campus hiring integration</li>
+        <li>Hiring analytics dashboard</li>
+        <li>Branded employer page</li>
+        <li>Dedicated account manager</li>
+      </ul>
+      <a href="#" class="btn-ghost" style="display:block;text-align:center;padding:14px;border-radius:var(--radius-sm)">Talk to Sales →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ARCHITECTURE -->
+<section>
+  <div class="section-label">Technical Blueprint</div>
+  <h2>Backend<br><span class="text-gold">Architecture</span></h2>
+  <p class="section-desc">Built for scale — designed to handle millions of students across the UAE and MENA region.</p>
+  <div class="arch-diagram">
+    <div class="arch-row">
+      <div class="arch-box frontend"><h4>Web App</h4><span>Next.js 14 + TypeScript</span></div>
+      <div class="arch-box frontend"><h4>Mobile App</h4><span>React Native + Expo</span></div>
+      <div class="arch-box frontend"><h4>Admin Panel</h4><span>React + TanStack</span></div>
+    </div>
+    <div class="arch-arrow">↕ REST / GraphQL / WebSocket</div>
+    <div class="arch-row">
+      <div class="arch-box backend"><h4>API Gateway</h4><span>Kong + Rate Limiting</span></div>
+      <div class="arch-box backend"><h4>Auth Service</h4><span>Clerk + JWT + UAE Pass</span></div>
+      <div class="arch-box backend"><h4>AI Engine</h4><span>Claude API + Vector DB</span></div>
+    </div>
+    <div class="arch-arrow">↕ gRPC / Kafka Event Bus</div>
+    <div class="arch-row">
+      <div class="arch-box backend"><h4>Competition Engine</h4><span>Node.js + WebSockets</span></div>
+      <div class="arch-box backend"><h4>Matching Service</h4><span>Python + FastAPI</span></div>
+      <div class="arch-box backend"><h4>Notification Hub</h4><span>FCM + SendGrid + WhatsApp</span></div>
+    </div>
+    <div class="arch-arrow">↕ Connection Layer</div>
+    <div class="arch-row">
+      <div class="arch-box db"><h4>PostgreSQL</h4><span>Primary Data (Supabase)</span></div>
+      <div class="arch-box db"><h4>Redis</h4><span>Cache + Leaderboard</span></div>
+      <div class="arch-box db"><h4>Pinecone</h4><span>AI Vector Search</span></div>
+      <div class="arch-box db"><h4>S3 / Cloudflare</h4><span>Media + CDN</span></div>
+    </div>
+    <div class="arch-arrow">↕ Infrastructure</div>
+    <div class="arch-row">
+      <div class="arch-box infra"><h4>AWS UAE Region</h4><span>Data residency compliance</span></div>
+      <div class="arch-box infra"><h4>Kubernetes</h4><span>Container orchestration</span></div>
+      <div class="arch-box infra"><h4>Cloudflare</h4><span>DDoS + Edge Security</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DATABASE SCHEMA -->
+<section>
+  <div class="section-label">Data Design</div>
+  <h2>Database<br><span class="text-gold">Schema</span></h2>
+  <p class="section-desc">Clean, normalized schema designed for performance and extensibility.</p>
+  <div class="schema-grid">
+    <div class="table-card">
+      <div class="table-header"><h4>users</h4></div>
+      <div class="table-fields">
+        <div class="field-row"><span class="field-name">id</span><span class="field-pk">PK</span><span class="field-type">uuid</span></div>
+        <div class="field-row"><span class="field-name">email</span><span class="field-type">varchar</span></div>
+        <div class="field-row"><span class="field-name">role</span><span class="field-type">enum</span></div>
+        <div class="field-row"><span class="field-name">zeal_score</span><span class="field-type">integer</span></div>
+        <div class="field-row"><span class="field-name">university_id</span><span class="field-type">FK → uni</span></div>
+        <div class="field-row"><span class="field-name">nationality</span><span class="field-type">varchar</span></div>
+        <div class="field-row"><span class="field-name">created_at</span><span class="field-type">timestamp</span></div>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-header"><h4>competitions</h4></div>
+      <div class="table-fields">
+        <div class="field-row"><span class="field-name">id</span><span class="field-pk">PK</span><span class="field-type">uuid</span></div>
+        <div class="field-row"><span class="field-name">title</span><span class="field-type">varchar</span></div>
+        <div class="field-row"><span class="field-name">type</span><span class="field-type">enum</span></div>
+        <div class="field-row"><span class="field-name">prize_aed</span><span class="field-type">integer</span></div>
+        <div class="field-row"><span class="field-name">host_company_id</span><span class="field-type">FK</span></div>
+        <div class="field-row"><span class="field-name">deadline</span><span class="field-type">timestamp</span></div>
+        <div class="field-row"><span class="field-name">max_teams</span><span class="field-type">integer</span></div>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-header"><h4>jobs</h4></div>
+      <div class="table-fields">
+        <div class="field-row"><span class="field-name">id</span><span class="field-pk">PK</span><span class="field-type">uuid</span></div>
+        <div class="field-row"><span class="field-name">title</span><span class="field-type">varchar</span></div>
+        <div class="field-row"><span class="field-name">type</span><span class="field-type">enum</span></div>
+        <div class="field-row"><span class="field-name">salary_aed</span><span class="field-type">integer</span></div>
+        <div class="field-row"><span class="field-name">company_id</span><span class="field-type">FK</span></div>
+        <div class="field-row"><span class="field-name">emirate</span><span class="field-type">varchar</span></div>
+        <div class="field-row"><span class="field-name">embedding</span><span class="field-type">vector(1536)</span></div>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-header"><h4>companies</h4></div>
+      <div class="table-fields">
+        <div class="field-row"><span class="field-name">id</span><span class="field-pk">PK</span><span class="field-type">uuid</span></div>
+        <div class="field-row"><span class="field-name">name</span><span class="field-type">varchar</span></div>
+        <div class="field-row"><span class="field-name">industry</span><span class="field-type">varchar</span></div>
+        <div class="field-row"><span class="field-name">emirate</span><span class="field-type">varchar</span></div>
+        <div class="field-row"><span class="field-name">plan_tier</span><span class="field-type">enum</span></div>
+        <div class="field-row"><span class="field-name">emiratization_%</span><span class="field-type">decimal</span></div>
+        <div class="field-row"><span class="field-name">verified</span><span class="field-type">boolean</span></div>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-header"><h4>universities</h4></div>
+      <div class="table-fields">
+        <div class="field-row"><span class="field-name">id</span><span class="field-pk">PK</span><span class="field-type">uuid</span></div>
+        <div class="field-row"><span class="field-name">name</span><span class="field-type">varchar</span></div>
+        <div class="field-row"><span class="field-name">emirate</span><span class="field-type">varchar</span></div>
+        <div class="field-row"><span class="field-name">placement_rate</span><span class="field-type">decimal</span></div>
+        <div class="field-row"><span class="field-name">qnrf_accredited</span><span class="field-type">boolean</span></div>
+        <div class="field-row"><span class="field-name">student_count</span><span class="field-type">integer</span></div>
+        <div class="field-row"><span class="field-name">plan_tier</span><span class="field-type">enum</span></div>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-header"><h4>zeal_scores</h4></div>
+      <div class="table-fields">
+        <div class="field-row"><span class="field-name">user_id</span><span class="field-pk">PK</span><span class="field-type">FK</span></div>
+        <div class="field-row"><span class="field-name">competition_pts</span><span class="field-type">integer</span></div>
+        <div class="field-row"><span class="field-name">skill_pts</span><span class="field-type">integer</span></div>
+        <div class="field-row"><span class="field-name">engagement_pts</span><span class="field-type">integer</span></div>
+        <div class="field-row"><span class="field-name">mentorship_pts</span><span class="field-type">integer</span></div>
+        <div class="field-row"><span class="field-name">peer_review_pts</span><span class="field-type">integer</span></div>
+        <div class="field-row"><span class="field-name">computed_rank</span><span class="field-type">integer</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MOBILE CONCEPT -->
+<section>
+  <div class="section-label">Mobile First</div>
+  <h2>ZEAL<br><span class="text-gold">Mobile App</span></h2>
+  <div class="mobile-concept">
+    <div class="phone-mockup">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:12px">Good morning, Sara 👋</div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:16px;color:var(--white)">Your ZEAL</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+          <div style="background:rgba(232,184,75,0.1);border:1px solid rgba(232,184,75,0.2);border-radius:12px;padding:14px">
+            <div style="font-family:'Space Mono',monospace;font-size:22px;color:var(--gold);font-weight:700">9,840</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:2px">ZEAL Score</div>
+          </div>
+          <div style="background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.15);border-radius:12px;padding:14px">
+            <div style="font-family:'Space Mono',monospace;font-size:22px;color:#4ADE80;font-weight:700">#1</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:2px">UAE Rank</div>
+          </div>
+        </div>
+        <div style="background:rgba(20,20,16,0.8);border:1px solid rgba(232,184,75,0.15);border-radius:12px;padding:14px;margin-bottom:10px">
+          <div style="font-size:10px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Upcoming Deadline</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:2px">UAE FinTech Challenge</div>
+          <div style="font-size:11px;color:var(--muted)">Closes in 3 days · AED 100K prize</div>
+        </div>
+        <div style="background:rgba(20,20,16,0.8);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px">
+          <div style="font-size:10px;color:#60A5FA;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">New Job Match</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:2px">PM Intern @ Careem</div>
+          <div style="font-size:11px;color:var(--muted)">AI Match: 97% · AED 5,000/mo</div>
+        </div>
+      </div>
+      <div class="phone-bottom">
+        <span class="phone-icon active">🏠</span>
+        <span class="phone-icon">⚡</span>
+        <span class="phone-icon">💼</span>
+        <span class="phone-icon">🏆</span>
+        <span class="phone-icon">👤</span>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;margin-bottom:20px;letter-spacing:-1px">Your career<br>always in your pocket</h3>
+      <p style="font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:32px">The ZEAL mobile app is designed mobile-first for Gen Z UAE students who live on their phones. Real-time competition updates, instant job alerts, and a social feed for the ambitions generation.</p>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;gap:14px;align-items:center">
+          <div style="width:40px;height:40px;background:rgba(232,184,75,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📲</div>
+          <div><div style="font-weight:600;margin-bottom:2px">Push Notifications</div><div style="font-size:13px;color:var(--muted)">Competition deadlines, match alerts, mentorship reminders via WhatsApp + in-app</div></div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:center">
+          <div style="width:40px;height:40px;background:rgba(74,222,128,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🎯</div>
+          <div><div style="font-weight:600;margin-bottom:2px">UAE Pass Integration</div><div style="font-size:13px;color:var(--muted)">One-tap login with official UAE national digital identity for seamless onboarding</div></div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:center">
+          <div style="width:40px;height:40px;background:rgba(37,99,235,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🌐</div>
+          <div><div style="font-weight:600;margin-bottom:2px">Arabic RTL Support</div><div style="font-size:13px;color:var(--muted)">Full right-to-left Arabic interface built from day one, not bolted on</div></div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:center">
+          <div style="width:40px;height:40px;background:rgba(232,184,75,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">⚡</div>
+          <div><div style="font-weight:600;margin-bottom:2px">Live Competition Feed</div><div style="font-size:13px;color:var(--muted)">Watch real-time leaderboard updates during hackathons and live challenges</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INVESTOR PITCH -->
+<section>
+  <div class="section-label">Investor Thesis</div>
+  <h2>Why Invest in<br><span class="text-gold">ZEAL?</span></h2>
+  <p class="section-desc">The UAE has 700,000+ university students and no dedicated talent platform. The market is ready.</p>
+  <div class="pitch-grid">
+    <div class="pitch-card">
+      <div class="big-num">$4.2B</div>
+      <h3>Total Addressable Market</h3>
+      <p>UAE + GCC edtech and talent-tech market projected to reach $4.2B by 2028, growing at 18% CAGR. ZEAL targets the intersection of three underpenetrated verticals: edtech, HR tech, and competition platforms.</p>
+    </div>
+    <div class="pitch-card">
+      <div class="big-num">700K+</div>
+      <h3>Immediate User Base</h3>
+      <p>UAE alone has 700,000+ university students with no dedicated platform serving their career and competition needs. Expanding to GCC unlocks a 3.2M student market in Phase 2 within 18 months.</p>
+    </div>
+    <div class="pitch-card">
+      <div class="big-num">4×</div>
+      <h3>Revenue Per User vs India</h3>
+      <p>UAE's higher GDP per capita means students pay 4x more for premium features vs Indian platforms like Unstop. Companies spend 10x more per hire in the UAE. Unit economics are fundamentally superior.</p>
+    </div>
+    <div class="pitch-card">
+      <div class="big-num">2031</div>
+      <h3>UAE Vision Tailwinds</h3>
+      <p>UAE Vision 2031, Operation 300bn, and ADIO initiatives mandate Emiratization of private sector jobs and upskilling of youth. ZEAL is a direct enabler of national policy, making government partnerships natural.</p>
+    </div>
+  </div>
+  <div style="margin-top:40px;background:rgba(20,20,16,0.9);border:1px solid rgba(232,184,75,0.15);border-radius:var(--radius-lg);padding:36px">
+    <div class="section-label" style="margin-bottom:16px">Growth Roadmap</div>
+    <div class="roadmap">
+      <div class="roadmap-item done">
+        <div class="roadmap-quarter">Q1 2025</div>
+        <h4>Launch MVP</h4>
+        <p>Core platform, 10 UAE universities, 50 company partners</p>
+      </div>
+      <div class="roadmap-item done">
+        <div class="roadmap-quarter">Q3 2025</div>
+        <h4>Scale UAE</h4>
+        <p>All 63 UAE universities, 200 companies, 50K students</p>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-quarter">Q1 2026</div>
+        <h4>GCC Expansion</h4>
+        <p>Launch Saudi Arabia and Kuwait, government integrations</p>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-quarter">Q3 2026</div>
+        <h4>MENA Platform</h4>
+        <p>Full MENA rollout, Series A, enterprise tier launch</p>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-quarter">2027</div>
+        <h4>Market Leader</h4>
+        <p>1M+ users, IPO preparation, international expansion</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div style="position:relative;z-index:2">
+    <div class="uae-highlight">🇦🇪 Proudly Built for the Emirates</div>
+    <h2>Your ambition<br><span class="text-gold">starts here.</span></h2>
+    <p class="cta-desc">Join 47,000+ UAE students already building their future on ZEAL. It's free, it's yours, and it's built for you.</p>
+    <div class="cta-buttons">
+      <a href="#" class="btn-hero gold">Join ZEAL Free →</a>
+      <a href="#" class="btn-hero outline">For Companies</a>
+      <a href="#" class="btn-hero outline">For Universities</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <a href="#" class="logo" style="display:inline-flex">ZEAL<span></span></a>
+    <p>The UAE's premier platform connecting ambitious students with world-class opportunities through competitions, internships, jobs, and mentorship.</p>
+  </div>
+  <div class="footer-col">
+    <h5>Platform</h5>
+    <ul>
+      <li><a href="#">Competitions</a></li>
+      <li><a href="#">Internships</a></li>
+      <li><a href="#">Jobs</a></li>
+      <li><a href="#">Leaderboard</a></li>
+      <li><a href="#">Mentorship</a></li>
+      <li><a href="#">Skill Assessments</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>For Companies</h5>
+    <ul>
+      <li><a href="#">Post a Job</a></li>
+      <li><a href="#">Host a Hackathon</a></li>
+      <li><a href="#">Campus Hiring</a></li>
+      <li><a href="#">Talent Search</a></li>
+      <li><a href="#">Pricing</a></li>
+      <li><a href="#">Case Studies</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>Company</h5>
+    <ul>
+      <li><a href="#">About ZEAL</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Press</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Arabic / عربي</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 ZEAL Technologies LLC. Registered in ADGM, Abu Dhabi, UAE.</span>
+  <span>🇦🇪 Built in the Emirates · Privacy · Terms</span>
+</div>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0;
+let ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top = mouseY + 'px';
+});
+
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  ring.style.left = ringX + 'px';
+  ring.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, button, .comp-card, .job-card, .lb-item, .company-pill').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '20px';
+    cursor.style.height = '20px';
+    ring.style.width = '56px';
+    ring.style.height = '56px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '12px';
+    cursor.style.height = '12px';
+    ring.style.width = '36px';
+    ring.style.height = '36px';
+  });
+});
+
+// Tab switching
+function switchTab(btn, tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+// Intersection Observer for animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.feature-card, .comp-card, .job-card, .lb-item, .pitch-card, .table-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+
+// Number counter animation
+function animateCounter(el, end, duration) {
+  let start = 0;
+  const step = end / (duration / 16);
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= end) { start = end; clearInterval(timer); }
+    el.textContent = Math.floor(start).toLocaleString() + (el.dataset.suffix || '');
+  }, 16);
+}
+</script>
+</body>
+</html>
